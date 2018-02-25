@@ -30,7 +30,7 @@ public class EntityNPC extends EntityCreature implements INpc
 		tasks.addTask(0, new EntityAISwimming(this));
 		tasks.addTask(2, new EntityAIMoveIndoors(this));
 		tasks.addTask(4, new EntityAIOpenDoor(this, true));
-		tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.6D));
+		tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.3D));
 		tasks.addTask(9, new EntityAIWatchClosest2(this, EntityPlayer.class, 3F, 1F));
 		tasks.addTask(1, new EntityAIWanderAvoidWater(this, 0.3D));
 		tasks.addTask(10, new EntityAIWatchClosest(this, EntityLiving.class, 8F));
