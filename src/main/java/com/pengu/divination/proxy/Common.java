@@ -7,6 +7,11 @@ public class Common
 		
 	}
 	
+	public void init()
+	{
+		
+	}
+	
 	public void playOnce(String url)
 	{
 		

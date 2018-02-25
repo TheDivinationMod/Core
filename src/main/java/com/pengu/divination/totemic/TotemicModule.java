@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import com.pengu.divination.InfoDC;
 import com.pengu.divination.core.RecipeHelper;
 import com.pengu.divination.core.iModule;
+import com.pengu.divination.init.EntitiesDC;
 import com.pengu.divination.totemic.init.BlocksDT;
 import com.pengu.divination.totemic.init.ItemsDT;
 import com.pengu.divination.totemic.init.RecipesDT;
@@ -39,10 +40,14 @@ public class TotemicModule implements iModule
 	{
 		LOG.info("Loading Totemic Module...");
 		
+		proxy.preInit();
+		
 		TotemicSealsDT.load();
 		
 		SimpleRegistration.registerFieldBlocksFrom(BlocksDT.class, InfoDC.MOD_ID, tab);
 		SimpleRegistration.registerFieldItemsFrom(ItemsDT.class, InfoDC.MOD_ID, tab);
+		
+		EntitiesDC.loadTotemic();
 	}
 	
 	@Override

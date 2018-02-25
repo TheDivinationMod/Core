@@ -17,6 +17,11 @@ public class Client extends Common
 	}
 	
 	@Override
+	public void init()
+	{
+	}
+	
+	@Override
 	public void playOnce(String url)
 	{
 		oneTimeMusic = url;

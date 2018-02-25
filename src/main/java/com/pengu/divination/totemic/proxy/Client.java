@@ -1,6 +1,8 @@
 package com.pengu.divination.totemic.proxy;
 
+import com.pengu.divination.client.render.entity.RenderNPC;
 import com.pengu.divination.totemic.client.tesr.TESRTotemicSeal;
+import com.pengu.divination.totemic.entity.npc.EntityShaman;
 import com.pengu.divination.totemic.init.ItemsDT;
 import com.pengu.divination.totemic.seals.core.EnumSealColor;
 import com.pengu.divination.totemic.tiles.TileTotemicSeal;
@@ -9,9 +11,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class Client extends Common
 {
+	@Override
+	public void preInit()
+	{
+		RenderingRegistry.registerEntityRenderingHandler(EntityShaman.class, RenderNPC.FACTORY);
+	}
+	
 	@Override
 	public void init()
 	{

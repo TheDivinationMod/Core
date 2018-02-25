@@ -18,6 +18,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
@@ -39,6 +40,9 @@ public class Divination
 	
 	public static final Logger LOG = LogManager.getLogger(InfoDC.MOD_NAME);
 	
+	@Instance
+	public static Divination instance;
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
@@ -56,6 +60,9 @@ public class Divination
 	@EventHandler
 	public void init(FMLInitializationEvent e)
 	{
+		LOG.info("Performing init!");
+		proxy.init();
+		
 		for(iModule mod : getModules())
 		{
 			mod.init();
@@ -66,6 +73,7 @@ public class Divination
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
+		LOG.info("Performing postInit!");
 		for(iModule mod : getModules())
 			mod.postInit();
 	}
