@@ -1,0 +1,9 @@
+[
+    {
+        "modid": "divinationmod",
+        "name": "The Divination Mod",
+        "description": "A mod about several aspects of magic working together.",
+        "authorList": ["APengu"],
+        "logoFile": "logo.png"
+    }
+]

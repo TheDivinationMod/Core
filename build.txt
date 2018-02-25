@@ -1,0 +1,17 @@
+#Project info
+author=APengu
+
+#Runtime info
+forge_version=14.23.2.2611
+minecraft_version=1.12.2
+mcp=snapshot_20170624
+hc_version=1.9.6.7
+ml_version=1r
+
+#Mod info
+mod_id=divinationmod
+mod_id_fancy=DivinationMod
+mod_name=The Divination Mod
+mod_version=1b
+cf_project=289086
+release_type=beta
