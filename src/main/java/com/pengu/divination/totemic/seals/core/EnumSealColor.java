@@ -1,4 +1,4 @@
-package com.pengu.divination.totemic.seals;
+package com.pengu.divination.totemic.seals.core;
 
 import javax.annotation.Nullable;
 

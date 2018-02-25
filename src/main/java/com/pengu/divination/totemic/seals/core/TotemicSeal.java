@@ -1,32 +1,46 @@
-package com.pengu.divination.totemic.seals;
+package com.pengu.divination.totemic.seals.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.pengu.divination.totemic.tiles.TileTotemicSeal;
+
 public class TotemicSeal
 {
+	public static final List<TotemicSeal> seals = new ArrayList<>();
+	
 	public final List<TSealPoint> points;
 	public final Consumer<TileTotemicSeal> tick;
 	
 	public TotemicSeal(List<TSealPoint> points, Consumer<TileTotemicSeal> tick)
 	{
+		this(points, tick, true);
+	}
+	
+	private TotemicSeal(List<TSealPoint> points, Consumer<TileTotemicSeal> tick, boolean register)
+	{
 		this.points = points;
 		this.tick = tick;
+		if(register)
+			seals.add(this);
 	}
 	
 	@Override
 	public boolean equals(Object obj)
 	{
-		return obj instanceof TotemicSeal && equalsIgnoreRotation((TotemicSeal) obj);
+		return obj instanceof TotemicSeal && equalsIgnoreRotation(((TotemicSeal) obj).points);
 	}
 	
-	public boolean equalsIgnoreRotation(TotemicSeal seal)
+	public boolean equalsIgnoreRotation(List<TSealPoint> seal)
 	{
-		if(this.points.size() == seal.points.size())
-			return this.points.containsAll(seal.points);
-		return false;
+		if(seal.size() != points.size())
+			return false;
+		for(TSealPoint p : points)
+			if(!seal.contains(p))
+				return false;
+		return true;
 	}
 	
 	public TotemicSeal rotate(int angle)
@@ -48,6 +62,6 @@ public class TotemicSeal
 			return this;
 		}
 		
-		return new TotemicSeal(Collections.unmodifiableList(np), tick);
+		return new TotemicSeal(Collections.unmodifiableList(np), tick, false);
 	}
 }

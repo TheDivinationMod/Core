@@ -1,4 +1,4 @@
-package com.pengu.divination.totemic.seals;
+package com.pengu.divination.totemic.seals.core;
 
 public class TSealPoint
 {
@@ -22,10 +22,14 @@ public class TSealPoint
 	{
 		if(b.color != color)
 			return false;
-		if(x == 15 - b.x && y == b.y)
+		if(x == b.x && y == b.y)
 			return true;
-		if(x == b.x && y == 15 - b.y)
+
+		if(x == 15 - b.y && y == b.x)
 			return true;
+		if(x == b.y && y == 15 - b.x)
+			return true;
+		
 		return x == 15 - b.x && y == 15 - b.y;
 	}
 }

@@ -1,4 +1,4 @@
-package com.pengu.divination.totemic.seals;
+package com.pengu.divination.totemic.seals.core;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import com.pengu.divination.Divination;
 import com.pengu.divination.InfoDC;
+import com.pengu.divination.totemic.tiles.TileTotemicSeal;
 
 public class SealDefiner
 {

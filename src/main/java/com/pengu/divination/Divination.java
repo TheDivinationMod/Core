@@ -1,23 +1,37 @@
 package com.pengu.divination;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pengu.divination.core.iModule;
 import com.pengu.divination.proxy.Common;
 import com.pengu.divination.totemic.TotemicModule;
 import com.pengu.hammercore.HammerCore;
 import com.pengu.musiclayer.api.MusicLayer;
 
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(modid = InfoDC.MOD_ID, version = InfoDC.MOD_VERSION, name = InfoDC.MOD_NAME, dependencies = "required-after:hammercore;required-after:musiclayer", certificateFingerprint = "4d7b29cd19124e986da685107d16ce4b49bc0a97")
 public class Divination
 {
+	public static final List<iModule> modules = new ArrayList<>();
+	
 	@SidedProxy(serverSide = "com.pengu.divination.proxy.Common", clientSide = "com.pengu.divination.proxy.Client")
 	public static Common proxy;
 	
@@ -29,10 +43,47 @@ public class Divination
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		LOG.info("Performing preInit!");
+		MinecraftForge.EVENT_BUS.register(this);
 		meta(e.getModMetadata());
 		proxy.preInit();
-		if(totemic != null)
-			totemic.preInit();
+		
+		modules.add(totemic);
+		
+		for(iModule mod : getModules())
+			mod.preInit();
+	}
+	
+	@EventHandler
+	public void init(FMLInitializationEvent e)
+	{
+		for(iModule mod : getModules())
+		{
+			mod.init();
+			mod.getRecipes().smelting();
+		}
+	}
+	
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent e)
+	{
+		for(iModule mod : getModules())
+			mod.postInit();
+	}
+	
+	@SubscribeEvent
+	public void addRecipes(RegistryEvent.Register<IRecipe> reg)
+	{
+		IForgeRegistry<IRecipe> fr = reg.getRegistry();
+		for(iModule mod : getModules())
+			mod.getRecipes().collect() //
+			        .stream() //
+			        .filter(r -> r != null) //
+			        .forEach(fr::register);
+	}
+	
+	public static Collection<iModule> getModules()
+	{
+		return modules;
 	}
 	
 	@EventHandler
