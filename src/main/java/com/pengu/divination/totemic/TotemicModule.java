@@ -24,7 +24,7 @@ public class TotemicModule implements iModule
 	@SidedProxy(clientSide = "com.pengu.divination.totemic.proxy.Client", serverSide = "com.pengu.divination.totemic.proxy.Common")
 	public static Common proxy;
 	
-	public static final Logger LOG = LogManager.getLogger(InfoDC.MOD_NAME + " Totemic");
+	public static final Logger LOG = LogManager.getLogger(InfoDC.MOD_NAME + ": Totemic");
 	
 	public static final CreativeTabs tab = new CreativeTabs(InfoDC.MOD_ID + ".totemic")
 	{

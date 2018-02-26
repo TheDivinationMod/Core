@@ -8,7 +8,8 @@ public enum EnumSealColor
 {
 	GREEN(0x00FF00), //
 	RED(0xFF0000), //
-	YELLOW(0xFFFF00);
+	YELLOW(0xFFFF00), //
+	BLUE(0x0000FF);
 	
 	public final int color, r, g, b;
 	

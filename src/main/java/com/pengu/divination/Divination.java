@@ -48,6 +48,7 @@ public class Divination
 	{
 		LOG.info("Performing preInit!");
 		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.register(proxy);
 		meta(e.getModMetadata());
 		proxy.preInit();
 		

@@ -16,9 +16,9 @@ import com.pengu.divination.totemic.tiles.TileTotemicSeal;
 
 public class SealDefiner
 {
-	public static TotemicSeal loadSeal(String seal, Consumer<TileTotemicSeal> tick)
+	public static TotemicSeal loadSeal(String seal, Consumer<TileTotemicSeal> tick, String name)
 	{
-		InputStream in = Divination.class.getResourceAsStream("/assets/" + InfoDC.MOD_ID + "/totem/seals/" + seal + ".png");
+		InputStream in = Divination.class.getResourceAsStream("/assets/" + InfoDC.MOD_ID + "/textures/totemic/seals/" + seal + ".png");
 		if(in != null)
 			try
 			{
@@ -37,7 +37,11 @@ public class SealDefiner
 							points.add(new TSealPoint(x, y, c));
 					}
 				
-				return new TotemicSeal(Collections.unmodifiableList(points), tick);
+				TotemicSeal s = new TotemicSeal(Collections.unmodifiableList(points), tick);
+				s.name = name;
+				s.image = img;
+				s.tex = "textures/totemic/seals/" + seal + ".png";
+				return s;
 			} catch(IOException ie)
 			{
 			}

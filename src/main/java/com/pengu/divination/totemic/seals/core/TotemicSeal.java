@@ -1,5 +1,6 @@
 package com.pengu.divination.totemic.seals.core;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,9 +11,11 @@ import com.pengu.divination.totemic.tiles.TileTotemicSeal;
 public class TotemicSeal
 {
 	public static final List<TotemicSeal> seals = new ArrayList<>();
-	
+	public String name;
+	public String tex;
 	public final List<TSealPoint> points;
 	public final Consumer<TileTotemicSeal> tick;
+	public BufferedImage image;
 	
 	public TotemicSeal(List<TSealPoint> points, Consumer<TileTotemicSeal> tick)
 	{

@@ -12,6 +12,6 @@ public class TotemicSealsDT
 	
 	static
 	{
-		SealDefiner.loadSeal("starting", new TSealStarting());
+		SealDefiner.loadSeal("starting", new TSealStarting(), "guidance");
 	}
 }

@@ -61,6 +61,6 @@ public class EntityNPC extends EntityCreature implements INpc
 	@Override
 	public boolean canBeAttackedWithItem()
 	{
-		return false;
+		return true;
 	}
 }

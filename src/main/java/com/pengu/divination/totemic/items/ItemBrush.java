@@ -141,6 +141,15 @@ public class ItemBrush extends Item
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
 	{
+		EnumSealColor col = null;
+		
+		NBTTagCompound nbt = playerIn.getHeldItem(handIn).getTagCompound();
+		if(nbt != null && nbt.hasKey("Color", NBT.TAG_INT))
+			col = EnumSealColor.values()[nbt.getInteger("Color") % EnumSealColor.values().length];
+		
+		if(col == null)
+			return super.onItemRightClick(worldIn, playerIn, handIn);
+		
 		Vec3d headVec = RayTracer.getCorrectedHeadVec(playerIn);
 		double reach = RayTracer.getBlockReachDistance(playerIn) / 2;
 		Vec3d lookVec = playerIn.getLook(1);
