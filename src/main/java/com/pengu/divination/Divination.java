@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pengu.divination.api.events.GetDivinationModulesEvent;
 import com.pengu.divination.core.iModule;
 import com.pengu.divination.proxy.Common;
 import com.pengu.divination.totemic.TotemicModule;
@@ -53,6 +54,9 @@ public class Divination
 		proxy.preInit();
 		
 		modules.add(totemic);
+		List<iModule> mds = new ArrayList<>();
+		MinecraftForge.EVENT_BUS.post(new GetDivinationModulesEvent(mds));
+		modules.addAll(mds);
 		
 		for(iModule mod : getModules())
 			mod.preInit();
