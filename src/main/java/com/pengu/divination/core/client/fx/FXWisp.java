@@ -1,4 +1,4 @@
-package com.pengu.divination.client.fx;
+package com.pengu.divination.core.client.fx;
 
 import org.lwjgl.opengl.GL11;
 

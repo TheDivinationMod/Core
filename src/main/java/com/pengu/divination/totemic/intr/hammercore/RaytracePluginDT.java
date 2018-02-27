@@ -12,5 +12,8 @@ public class RaytracePluginDT implements iRayRegistry
 	public void registerCubes(iRayCubeRegistry cube)
 	{
 		cube.bindBlockCubeManager(BlocksDT.SEAL, BlocksDT.SEAL);
+		cube.bindBlockCubeManager(BlocksDT.DUNGEON_SLAB, BlocksDT.DUNGEON_SLAB);
+		cube.bindBlockCubeManager(BlocksDT.DUNGEON_SLAB_CRACKED, BlocksDT.DUNGEON_SLAB_CRACKED);
+		cube.bindBlockCubeManager(BlocksDT.DUNGEON_SLAB_MOSSY, BlocksDT.DUNGEON_SLAB_MOSSY);
 	}
 }

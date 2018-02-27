@@ -27,7 +27,7 @@ public class TSealStarting implements Consumer<TileTotemicSeal>
 			t.customSealData.setInteger("MaxTime", 3600 + rng.nextInt(600) - rng.nextInt(600));
 		int maxTime = t.customSealData.getInteger("MaxTime");
 		
-		if(t.getWorld().isRemote)
+		if(!t.getWorld().isRemote)
 			randomDisplayTick(t);
 		
 		if(time >= maxTime)

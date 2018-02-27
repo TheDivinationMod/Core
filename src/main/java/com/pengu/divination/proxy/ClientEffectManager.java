@@ -1,6 +1,6 @@
 package com.pengu.divination.proxy;
 
-import com.pengu.divination.client.fx.FXWisp;
+import com.pengu.divination.core.client.fx.FXWisp;
 import com.pengu.hammercore.net.pkt.thunder.Thunder.Layer;
 
 import net.minecraft.util.math.Vec3d;

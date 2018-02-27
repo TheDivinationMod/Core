@@ -1,4 +1,4 @@
-package com.pengu.divination.client.render.entity;
+package com.pengu.divination.core.client.render.entity;
 
 import com.pengu.divination.core.entity.npc.EntityNPC;
 

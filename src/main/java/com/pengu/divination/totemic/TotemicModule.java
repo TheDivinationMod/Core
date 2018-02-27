@@ -3,20 +3,20 @@ package com.pengu.divination.totemic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pengu.divination.Divination;
 import com.pengu.divination.InfoDC;
 import com.pengu.divination.core.RecipeHelper;
 import com.pengu.divination.core.iModule;
-import com.pengu.divination.init.EntitiesDC;
+import com.pengu.divination.core.init.EntitiesDC;
 import com.pengu.divination.totemic.init.BlocksDT;
 import com.pengu.divination.totemic.init.ItemsDT;
 import com.pengu.divination.totemic.init.RecipesDT;
 import com.pengu.divination.totemic.init.TotemicSealsDT;
 import com.pengu.divination.totemic.proxy.Common;
-import com.pengu.hammercore.common.SimpleRegistration;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.SidedProxy;
 
 public class TotemicModule implements iModule
@@ -25,6 +25,7 @@ public class TotemicModule implements iModule
 	public static Common proxy;
 	
 	public static final Logger LOG = LogManager.getLogger(InfoDC.MOD_NAME + ": Totemic");
+	public static Configuration configs;
 	
 	public static final CreativeTabs tab = new CreativeTabs(InfoDC.MOD_ID + ".totemic")
 	{
@@ -38,14 +39,12 @@ public class TotemicModule implements iModule
 	@Override
 	public void preInit()
 	{
-		LOG.info("Loading Totemic Module...");
-		
 		proxy.preInit();
 		
 		TotemicSealsDT.load();
 		
-		SimpleRegistration.registerFieldBlocksFrom(BlocksDT.class, InfoDC.MOD_ID, tab);
-		SimpleRegistration.registerFieldItemsFrom(ItemsDT.class, InfoDC.MOD_ID, tab);
+		Divination.registerBlocksFrom(BlocksDT.class, tab);
+		Divination.registerItemsFrom(ItemsDT.class, tab);
 		
 		EntitiesDC.loadTotemic();
 	}
@@ -57,8 +56,20 @@ public class TotemicModule implements iModule
 	}
 	
 	@Override
+	public String getName()
+	{
+		return "Totemic";
+	}
+	
+	@Override
 	public RecipeHelper getRecipes()
 	{
 		return RecipeHelper.getInstance(RecipesDT.class);
+	}
+	
+	@Override
+	public void applyConfigs(Configuration cfg)
+	{
+		configs = cfg;
 	}
 }

@@ -4,12 +4,14 @@ import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatc
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerY;
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerZ;
 
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
+import com.pengu.divination.Divination;
 import com.pengu.divination.InfoDC;
 import com.pengu.divination.totemic.items.ItemBrush;
 import com.pengu.divination.totemic.tiles.TileTotemicSeal;
-import com.pengu.hammercore.client.utils.RenderBlocks;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.musiclayer.api.GetMusicEvent;
 import com.pengu.musiclayer.api.MusicLayer;
@@ -17,13 +19,17 @@ import com.pengu.musiclayer.api.UpdateAlternativeMusicEvent;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Client extends Common
@@ -64,6 +70,30 @@ public class Client extends Common
 	protected EffectManager createFX()
 	{
 		return new ClientEffectManager();
+	}
+	
+	public final String MODID_JEI = TextFormatting.BLUE + "" + TextFormatting.ITALIC + InfoDC.MOD_NAME;
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void addTooltip(ItemTooltipEvent e)
+	{
+		List<String> tooltip = e.getToolTip();
+		
+		for(int i = 0; i < tooltip.size(); ++i)
+		{
+			String s = tooltip.get(i);
+			
+			if(s.contains(InfoDC.MOD_NAME))
+			{
+				String mod = Divination.instance.getModuleName(e.getItemStack().getItem());
+				mod = mod == null || mod.isEmpty() ? "?" : I18n.format("divination_module." + mod.toLowerCase());
+				
+				if(mod.length() > 1)
+					tooltip.set(i, s + " (" + mod + ")");
+				else
+					break;
+			}
+		}
 	}
 	
 	@SubscribeEvent

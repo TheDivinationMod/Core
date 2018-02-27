@@ -3,12 +3,17 @@ package com.pengu.divination.totemic.client.gui;
 import org.lwjgl.opengl.GL11;
 
 import com.pengu.divination.InfoDC;
+import com.pengu.divination.core.data.ClientResearchData;
+import com.pengu.divination.totemic.init.ItemsDT;
 import com.pengu.divination.totemic.seals.core.TotemicSeal;
 import com.pengu.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.client.utils.UtilsFX;
 import com.pengu.hammercore.core.gui.GuiCentered;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 
 public class GuiSealNote extends GuiCentered
 {
@@ -24,6 +29,11 @@ public class GuiSealNote extends GuiCentered
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
+		fontRenderer = ClientResearchData.isResearchCompleted("totemic.seal." + seal.name) ? mc.fontRenderer : mc.standardGalacticFontRenderer;
+
+		float pd = 16 / 2.5F;
+		int pix = (int) pd;
+		
 		GL11.glPushMatrix();
 		GL11.glTranslated(guiLeft, guiTop, 0);
 		
@@ -37,6 +47,13 @@ public class GuiSealNote extends GuiCentered
 		UtilsFX.bindTexture(InfoDC.MOD_ID, "textures/totemic/gui/seal_note.png");
 		RenderUtil.drawTexturedModalRect(0, 0, 0, 0, xSize, ySize);
 		
+		GL11.glPushMatrix();
+		GL11.glScaled(1 / 1.5, 1 / 1.5, 1 / 1.5);
+		fontRenderer.drawSplitString(I18n.format("divinationmod.totemic_seal." + seal.name), 10, (int) (pix * 19 * 1.5) - 2, (int) (xSize * 1.3), 0);
+		GL11.glPopMatrix();
+		
+		GL11.glColor4f(1, 1, 1, 1);
+		
 		UtilsFX.bindTexture(InfoDC.MOD_ID, seal.tex);
 		GL11.glPushMatrix();
 		GL11.glTranslated(6.5, 8, 0);
@@ -44,9 +61,6 @@ public class GuiSealNote extends GuiCentered
 		drawTexturedModalRect(0, 0, 0, 0, 256, 256);
 		GL11.glPopMatrix();
 		
-		float pd = 16 / 2.5F;
-		int pix = (int) pd;
-
 		GL11.glPushMatrix();
 		GL11.glTranslated(6.5, 8, 0);
 		GlStateManager.enableBlend();
@@ -76,30 +90,6 @@ public class GuiSealNote extends GuiCentered
 		GlStateManager.disableBlend();
 		
 		GL11.glPopMatrix();
-		
-		mouseX += (xSize / 2) / 1.5;
-		mouseX -= 14;
-		
-		mouseY += (ySize / 2) / 1.5;
-		mouseY -= 18;
-		
-		c: if(mouseX >= 6 && mouseY >= 8)
-		{
-			int x = mouseX - 6;
-			int y = mouseY - 8;
-			
-			x /= pix * 1.59;
-			y /= pix * 1.59;
-			
-			++x;
-			++y;
-			
-			if(x > 16 || y > 16)
-				break c;
-			
-			String s = "X: " + x + ", Z: " + y;
-			fontRenderer.drawString(s, (int) ((xSize - fontRenderer.getStringWidth(s)) / 2), pix * 19, 0);
-		}
 		
 		GL11.glPopMatrix();
 	}

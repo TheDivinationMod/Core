@@ -1,4 +1,4 @@
-package com.pengu.divination.init;
+package com.pengu.divination.core.init;
 
 import com.pengu.divination.Divination;
 import com.pengu.divination.InfoDC;

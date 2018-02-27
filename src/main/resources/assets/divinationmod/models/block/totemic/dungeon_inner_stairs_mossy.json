@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "divinationmod:blocks/totemic/dungeon_brick_mossy",
+        "top": "divinationmod:blocks/totemic/dungeon_brick_mossy",
+        "side": "divinationmod:blocks/totemic/dungeon_brick_mossy"
+    }
+}

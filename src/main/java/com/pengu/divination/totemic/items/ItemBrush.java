@@ -1,5 +1,8 @@
 package com.pengu.divination.totemic.items;
 
+import java.util.List;
+
+import com.pengu.divination.core.items.ItemResearchable;
 import com.pengu.divination.totemic.init.BlocksDT;
 import com.pengu.divination.totemic.seals.core.EnumSealColor;
 import com.pengu.divination.totemic.tiles.TileTotemicSeal;
@@ -7,14 +10,16 @@ import com.pengu.hammercore.common.utils.SoundUtil;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.net.HCNetwork;
 import com.pengu.hammercore.raytracer.RayTracer;
+import com.pengu.hammercore.utils.ColorNamePicker;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -27,10 +32,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBrush extends Item
+public class ItemBrush extends ItemResearchable
 {
 	public ItemBrush()
 	{
@@ -51,6 +59,20 @@ public class ItemBrush extends Item
 			SoundUtil.playSoundEffect(worldIn, "item.bucket.fill", entityLiving.getPosition(), .5F, 1.5F, SoundCategory.PLAYERS);
 		
 		return new ItemStack(this);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+	{
+		EnumSealColor col = null;
+		
+		NBTTagCompound nbt = stack.getTagCompound();
+		if(nbt != null && nbt.hasKey("Color", NBT.TAG_INT))
+			col = EnumSealColor.values()[nbt.getInteger("Color") % EnumSealColor.values().length];
+		
+		if(col != null)
+			tooltip.add(TextFormatting.GRAY + I18n.format("divination.color") + ": " + I18n.format(ColorNamePicker.getColorNameFromHex(col.getColor())));
 	}
 	
 	@Override

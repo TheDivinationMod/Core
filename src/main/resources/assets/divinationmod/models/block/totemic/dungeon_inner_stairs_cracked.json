@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "divinationmod:blocks/totemic/dungeon_brick_cracked",
+        "top": "divinationmod:blocks/totemic/dungeon_brick_cracked",
+        "side": "divinationmod:blocks/totemic/dungeon_brick_cracked"
+    }
+}

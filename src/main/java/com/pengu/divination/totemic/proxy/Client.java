@@ -1,6 +1,6 @@
 package com.pengu.divination.totemic.proxy;
 
-import com.pengu.divination.client.render.entity.RenderNPC;
+import com.pengu.divination.core.client.render.entity.RenderNPC;
 import com.pengu.divination.totemic.client.gui.GuiSealNote;
 import com.pengu.divination.totemic.client.isr.ItemRenderSealNote;
 import com.pengu.divination.totemic.client.tesr.TESRTotemicSeal;

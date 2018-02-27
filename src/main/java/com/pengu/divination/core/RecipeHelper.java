@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 
 public abstract class RecipeHelper
 {
@@ -78,36 +79,38 @@ public abstract class RecipeHelper
 	
 	protected void shaped(ItemStack out, Object... recipeComponents)
 	{
-		recipes.add(SimpleRegistration.parseShapedRecipe(out, recipeComponents).setRegistryName(InfoDC.MOD_ID, "recipes." + recipes.size()));
+		recipe(SimpleRegistration.parseShapedRecipe(out, recipeComponents));
 	}
 	
 	protected void shaped(Item out, Object... recipeComponents)
 	{
-		recipes.add(SimpleRegistration.parseShapedRecipe(new ItemStack(out), recipeComponents).setRegistryName(InfoDC.MOD_ID, "recipes." + recipes.size()));
+		recipe(SimpleRegistration.parseShapedRecipe(new ItemStack(out), recipeComponents));
 	}
 	
 	protected void shaped(Block out, Object... recipeComponents)
 	{
-		recipes.add(SimpleRegistration.parseShapedRecipe(new ItemStack(out), recipeComponents).setRegistryName(InfoDC.MOD_ID, "recipes." + recipes.size()));
+		recipe(SimpleRegistration.parseShapedRecipe(new ItemStack(out), recipeComponents));
 	}
 	
 	protected void shapeless(ItemStack out, Object... recipeComponents)
 	{
-		recipes.add(SimpleRegistration.parseShapelessRecipe(out, recipeComponents).setRegistryName(InfoDC.MOD_ID, "recipes." + recipes.size()));
+		recipe(SimpleRegistration.parseShapelessRecipe(out, recipeComponents));
 	}
 	
 	protected void shapeless(Item out, Object... recipeComponents)
 	{
-		recipes.add(SimpleRegistration.parseShapelessRecipe(new ItemStack(out), recipeComponents).setRegistryName(InfoDC.MOD_ID, "recipes." + recipes.size()));
+		recipe(SimpleRegistration.parseShapelessRecipe(new ItemStack(out), recipeComponents));
 	}
 	
 	protected void shapeless(Block out, Object... recipeComponents)
 	{
-		recipes.add(SimpleRegistration.parseShapelessRecipe(new ItemStack(out), recipeComponents).setRegistryName(InfoDC.MOD_ID, "recipes." + recipes.size()));
+		recipe(SimpleRegistration.parseShapelessRecipe(new ItemStack(out), recipeComponents));
 	}
 	
 	protected void recipe(IRecipe recipe)
 	{
+		if(recipe.getRegistryName() == null)
+			recipe = recipe.setRegistryName(new ResourceLocation(InfoDC.MOD_ID, "recipes." + recipes.size()));
 		recipes.add(recipe);
 	}
 }

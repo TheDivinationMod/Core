@@ -1,0 +1,50 @@
+
+##CREATIVE TABS##
+itemGroup.divinationmod.totemic=The Divination Mod: Totemic
+#################
+
+##MODULES##
+divination_module.totemic=Totemic
+###########
+
+##TILES##
+tile.divinationmod:mysterium_ore.name=Mysterium Ore
+#########
+
+##ITEMS##
+item.divinationmod:mysterium_book.name=Book of the Mysterium
+#########
+
+####TOTEMIC####
+
+##TILES##
+tile.divinationmod:totemic/dungeon_brick.name=Dungeon Bricks
+tile.divinationmod:totemic/dungeon_brick_cracked.name=Cracked Dungeon Bricks
+tile.divinationmod:totemic/dungeon_brick_mossy.name=Mossy Dungeon Bricks
+tile.divinationmod:totemic/dungeon_stairs.name=Dungeon Stairs
+tile.divinationmod:totemic/dungeon_stairs_cracked.name=Cracked Dungeon Stairs
+tile.divinationmod:totemic/dungeon_stairs_mossy.name=Mossy Dungeon Stairs
+tile.divinationmod:totemic/dungeon_slab.name=Dungeon Slab
+tile.divinationmod:totemic/dungeon_slab_cracked.name=Cracked Dungeon Slab
+tile.divinationmod:totemic/dungeon_slab_mossy.name=Mossy Dungeon Slab
+tile.divinationmod:totemic/seal.name=Drawn Seal
+#########
+
+##ITEMS##
+item.divinationmod:totemic/brush.name=Brush
+item.divinationmod:totemic/seal_note.name=Seal Notes
+#########
+
+##SEALS##
+divinationmod.totemic_seal.guidance=This seal summons shaman, a magical human that guides you through lots of stuff.
+#########
+
+###############
+
+##OTHER##
+divination.color=Color
+#########
+
+##ENTITY##
+entity.shaman.name=Shaman
+##########
