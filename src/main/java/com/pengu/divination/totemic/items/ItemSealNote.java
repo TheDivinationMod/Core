@@ -1,6 +1,6 @@
 package com.pengu.divination.totemic.items;
 
-import com.pengu.divination.core.items.ItemResearchable;
+import com.pengu.divination.api.items.ItemResearchable;
 import com.pengu.divination.totemic.TotemicModule;
 import com.pengu.divination.totemic.init.ItemsDT;
 import com.pengu.divination.totemic.seals.core.TotemicSeal;

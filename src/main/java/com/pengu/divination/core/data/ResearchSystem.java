@@ -84,8 +84,8 @@ public class ResearchSystem
 	@SubscribeEvent
 	public void playerTick(PlayerTickEvent e)
 	{
-		if(!e.player.world.isRemote && e.player.ticksExisted % 200 == 0 && e.player instanceof EntityPlayerMP && e.phase == Phase.START)
-			sync(e.player);
+		if(!e.player.world.isRemote && e.player instanceof EntityPlayerMP && e.phase == Phase.START)
+			getResearchForPlayer(e.player.getGameProfile().getName()).tick((EntityPlayerMP) e.player);
 	}
 	
 	public static void sync(EntityPlayer player)

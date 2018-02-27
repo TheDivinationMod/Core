@@ -1,4 +1,4 @@
-package com.pengu.divination.core;
+package com.pengu.divination.api;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -110,7 +110,7 @@ public abstract class RecipeHelper
 	protected void recipe(IRecipe recipe)
 	{
 		if(recipe.getRegistryName() == null)
-			recipe = recipe.setRegistryName(new ResourceLocation(InfoDC.MOD_ID, "recipes." + recipes.size()));
+			recipe = recipe.setRegistryName(new ResourceLocation(InfoDC.MOD_ID, "recipes." + getClass().getSimpleName() + "." + recipes.size()));
 		recipes.add(recipe);
 	}
 }

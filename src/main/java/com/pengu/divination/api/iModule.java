@@ -1,4 +1,4 @@
-package com.pengu.divination.core;
+package com.pengu.divination.api;
 
 import net.minecraftforge.common.config.Configuration;
 

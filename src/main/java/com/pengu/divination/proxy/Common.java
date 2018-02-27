@@ -24,6 +24,16 @@ public class Common
 		
 	}
 	
+	public void stopCurrentMusic()
+	{
+		
+	}
+	
+	public void openNotes(String text)
+	{
+		
+	}
+	
 	public EffectManager getFX()
 	{
 		if(fx == null)

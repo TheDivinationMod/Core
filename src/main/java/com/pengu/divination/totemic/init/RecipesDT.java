@@ -1,6 +1,6 @@
 package com.pengu.divination.totemic.init;
 
-import com.pengu.divination.core.RecipeHelper;
+import com.pengu.divination.api.RecipeHelper;
 
 public class RecipesDT extends RecipeHelper
 {

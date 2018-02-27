@@ -1,4 +1,4 @@
-package com.pengu.divination.core.items;
+package com.pengu.divination.api.items;
 
 import com.pengu.divination.core.data.ClientResearchData;
 

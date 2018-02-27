@@ -118,7 +118,7 @@ public class ShapelessRecipeBuilder
 				for(Ingredient ing : stay)
 					if(ing.apply(it))
 					{
-						its.add(it);
+						its.set(i, it.copy());
 						break;
 					}
 			}

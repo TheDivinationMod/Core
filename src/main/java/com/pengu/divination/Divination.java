@@ -11,10 +11,13 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pengu.divination.api.RecipeHelper;
+import com.pengu.divination.api.iModule;
 import com.pengu.divination.api.events.GetDivinationModulesEvent;
-import com.pengu.divination.core.iModule;
+import com.pengu.divination.core.ConfigsDC;
 import com.pengu.divination.core.init.BlocksDC;
 import com.pengu.divination.core.init.ItemsDC;
+import com.pengu.divination.core.init.RecipesDC;
 import com.pengu.divination.core.init.WorldGenDC;
 import com.pengu.divination.proxy.Common;
 import com.pengu.divination.totemic.TotemicModule;
@@ -145,6 +148,10 @@ public class Divination
 	public void addRecipes(RegistryEvent.Register<IRecipe> reg)
 	{
 		IForgeRegistry<IRecipe> fr = reg.getRegistry();
+		RecipeHelper.getInstance(RecipesDC.class).collect() //
+		        .stream() //
+		        .filter(r -> r != null) //
+		        .forEach(fr::register);
 		for(iModule mod : getModules())
 		{
 			currentModule = mod;

@@ -2,7 +2,7 @@ package com.pengu.divination.totemic.items;
 
 import java.util.List;
 
-import com.pengu.divination.core.items.ItemResearchable;
+import com.pengu.divination.api.items.ItemResearchable;
 import com.pengu.divination.totemic.init.BlocksDT;
 import com.pengu.divination.totemic.seals.core.EnumSealColor;
 import com.pengu.divination.totemic.tiles.TileTotemicSeal;

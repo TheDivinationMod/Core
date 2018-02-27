@@ -45,6 +45,10 @@ divinationmod.totemic_seal.guidance=This seal summons shaman, a magical human th
 divination.color=Color
 #########
 
+##NOTES##
+notes.divinationmod:mysterium_dust_craft=You have progressed in a magical way. To proceed further you may need to blow some mysterium dust on a book. What will happen is not known yet, it may be good...or maybe not.
+#########
+
 ##ENTITY##
 entity.shaman.name=Shaman
 ##########

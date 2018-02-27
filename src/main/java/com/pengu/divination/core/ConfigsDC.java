@@ -1,10 +1,11 @@
-package com.pengu.divination;
+package com.pengu.divination.core;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.pengu.divination.core.iModule;
+import com.pengu.divination.InfoDC;
+import com.pengu.divination.api.iModule;
 import com.pengu.hammercore.cfg.HCModConfigurations;
 import com.pengu.hammercore.cfg.iConfigReloadListener;
 

@@ -1,7 +1,7 @@
 package com.pengu.divination.core.init;
 
 import com.pengu.divination.ShapelessRecipeBuilder;
-import com.pengu.divination.core.RecipeHelper;
+import com.pengu.divination.api.RecipeHelper;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

@@ -2,7 +2,7 @@ package com.pengu.divination.api.events;
 
 import java.util.List;
 
-import com.pengu.divination.core.iModule;
+import com.pengu.divination.api.iModule;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
 
