@@ -13,6 +13,7 @@ import com.pengu.hammercore.client.render.item.ItemRenderingHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -50,5 +51,11 @@ public class Client extends Common
 	public void openSealNote(TotemicSeal seal)
 	{
 		Minecraft.getMinecraft().displayGuiScreen(new GuiSealNote(seal));
+	}
+	
+	@Override
+	public void applyClientConfigs(Configuration cfg)
+	{
+		
 	}
 }

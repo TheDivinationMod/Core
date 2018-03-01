@@ -4,16 +4,13 @@ import org.lwjgl.opengl.GL11;
 
 import com.pengu.divination.InfoDC;
 import com.pengu.divination.core.data.ClientResearchData;
-import com.pengu.divination.totemic.init.ItemsDT;
 import com.pengu.divination.totemic.seals.core.TotemicSeal;
 import com.pengu.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.client.utils.UtilsFX;
 import com.pengu.hammercore.core.gui.GuiCentered;
 
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
 
 public class GuiSealNote extends GuiCentered
 {
@@ -30,7 +27,7 @@ public class GuiSealNote extends GuiCentered
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
 		fontRenderer = ClientResearchData.isResearchCompleted("totemic.seal." + seal.name) ? mc.fontRenderer : mc.standardGalacticFontRenderer;
-
+		
 		float pd = 16 / 2.5F;
 		int pix = (int) pd;
 		

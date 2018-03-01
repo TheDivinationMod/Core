@@ -1,6 +1,7 @@
 
 ##CREATIVE TABS##
 itemGroup.divinationmod.totemic=The Divination Mod: Totemic
+itemGroup.divinationmod=The Divination Mod
 #################
 
 ##MODULES##
@@ -13,6 +14,9 @@ tile.divinationmod:mysterium_ore.name=Mysterium Ore
 
 ##ITEMS##
 item.divinationmod:mysterium_book.name=Book of the Mysterium
+item.divinationmod:mysterium_cluster.name=Mysterium Clusters
+item.divinationmod:mysterium_dust.name=Mysterium Dust
+item.divinationmod:notes.name=Notes
 #########
 
 ####TOTEMIC####
@@ -46,7 +50,7 @@ divination.color=Color
 #########
 
 ##NOTES##
-notes.divinationmod:mysterium_dust_craft=You have progressed in a magical way. To proceed further you may need to blow some mysterium dust on a book. What will happen is not known yet, it may be good...or maybe not.
+notes.divinationmod:mysterium_dust_craft=You have progressed in a magical way. To proceed further you may need to blow some mysterium dust on a book. What will happen is not known yet, it may be good...or maybe not. Only one thing for sure, what will you get can be your guide through the magic of The Divination.
 #########
 
 ##ENTITY##

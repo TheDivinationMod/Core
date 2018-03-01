@@ -10,6 +10,7 @@ import com.pengu.hammercore.common.utils.SoundUtil;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.net.HCNetwork;
 import com.pengu.hammercore.raytracer.RayTracer;
+import com.pengu.hammercore.utils.ColorHelper;
 import com.pengu.hammercore.utils.ColorNamePicker;
 
 import net.minecraft.block.Block;
@@ -29,6 +30,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.Vec3d;
@@ -44,12 +46,29 @@ public class ItemBrush extends ItemResearchable
 	{
 		setUnlocalizedName("totemic/brush");
 		setMaxStackSize(1);
+		setMaxDamage(30);
+	}
+	
+	@Override
+	public boolean showDurabilityBar(ItemStack stack)
+	{
+		return getColor(stack) != null;
+	}
+	
+	@Override
+	public int getRGBDurabilityForDisplay(ItemStack stack)
+	{
+		float d = 1 - (float) getDurabilityForDisplay(stack);
+		EnumSealColor col = getColor(stack);
+		if(col != null)
+			return MathHelper.multiplyColor(col.getColor(), ColorHelper.packRGB(d, d, d));
+		return super.getRGBDurabilityForDisplay(stack);
 	}
 	
 	@Override
 	public int getMaxItemUseDuration(ItemStack stack)
 	{
-		return 30;
+		return 3000;
 	}
 	
 	@Override
@@ -61,15 +80,33 @@ public class ItemBrush extends ItemResearchable
 		return new ItemStack(this);
 	}
 	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+	public static EnumSealColor getColor(ItemStack stack)
 	{
 		EnumSealColor col = null;
 		
 		NBTTagCompound nbt = stack.getTagCompound();
 		if(nbt != null && nbt.hasKey("Color", NBT.TAG_INT))
 			col = EnumSealColor.values()[nbt.getInteger("Color") % EnumSealColor.values().length];
+		
+		return col;
+	}
+	
+	public ItemStack withColor(EnumSealColor col)
+	{
+		ItemStack stack = new ItemStack(this);
+		if(col != null)
+		{
+			stack.setTagCompound(new NBTTagCompound());
+			stack.getTagCompound().setInteger("Color", col.ordinal());
+		}
+		return stack;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+	{
+		EnumSealColor col = getColor(stack);
 		
 		if(col != null)
 			tooltip.add(TextFormatting.GRAY + I18n.format("divination.color") + ": " + I18n.format(ColorNamePicker.getColorNameFromHex(col.getColor())));
@@ -92,7 +129,17 @@ public class ItemBrush extends ItemResearchable
 			{
 				Block b = player.world.getBlockState(res.getBlockPos()).getBlock();
 				if(b == Blocks.WATER || b == Blocks.FLOWING_WATER)
-					return;
+					if(stack.hasTagCompound() && stack.getTagCompound().hasKey("Color"))
+					{
+						stack.setItemDamage(stack.getItemDamage() + 1);
+						if(stack.getItemDamage() >= stack.getMaxDamage())
+						{
+							stack.setTagCompound(new NBTTagCompound());
+							SoundUtil.playSoundEffect(playerIn.world, "item.bucket.fill", playerIn.getPosition(), .5F, 1.5F, SoundCategory.PLAYERS);
+						}
+						playerIn.setActiveHand(player.getHeldItemOffhand() == stack ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
+						return;
+					}
 			}
 		}
 		
@@ -116,25 +163,10 @@ public class ItemBrush extends ItemResearchable
 		}
 	}
 	
-	public ItemStack withColor(EnumSealColor col)
-	{
-		ItemStack stack = new ItemStack(this);
-		if(col != null)
-		{
-			stack.setTagCompound(new NBTTagCompound());
-			stack.getTagCompound().setInteger("Color", col.ordinal());
-		}
-		return stack;
-	}
-	
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		EnumSealColor col = null;
-		
-		NBTTagCompound nbt = player.getHeldItem(hand).getTagCompound();
-		if(nbt != null && nbt.hasKey("Color", NBT.TAG_INT))
-			col = EnumSealColor.values()[nbt.getInteger("Color") % EnumSealColor.values().length];
+		EnumSealColor col = getColor(player.getHeldItem(hand));
 		
 		if(col != null && facing == EnumFacing.UP && worldIn.getBlockState(pos).isSideSolid(worldIn, pos, facing))
 		{
@@ -153,7 +185,15 @@ public class ItemBrush extends ItemResearchable
 				float hz = hitZ * 16;
 				
 				if(s.paint((int) hx, (int) hz, col))
+				{
 					HCNetwork.swingArm(player, hand);
+					ItemStack st = player.getHeldItem(hand);
+					st.setItemDamage(st.getItemDamage() + 1);
+					if(st.getItemDamage() >= st.getMaxDamage())
+						player.setHeldItem(hand, new ItemStack(this));
+					
+					s.sync();
+				}
 			}
 		}
 		

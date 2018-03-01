@@ -70,7 +70,6 @@ public class ResearchSystem
 		
 		PlayerResearchData comp = ResearchSystem.COMPLETED.getOrDefault(player, new PlayerResearchData()).deserializeSpecialData(nbt);
 		ResearchSystem.COMPLETED.put(player.getName(), comp);
-		sync(player);
 	}
 	
 	@SubscribeEvent

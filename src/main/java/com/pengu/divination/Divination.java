@@ -7,14 +7,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pengu.divination.api.RecipeHelper;
 import com.pengu.divination.api.iModule;
+import com.pengu.divination.api.iModuleProxy;
 import com.pengu.divination.api.events.GetDivinationModulesEvent;
-import com.pengu.divination.core.ConfigsDC;
+import com.pengu.divination.core.cfg.ConfigsDC;
 import com.pengu.divination.core.init.BlocksDC;
 import com.pengu.divination.core.init.ItemsDC;
 import com.pengu.divination.core.init.RecipesDC;
@@ -47,16 +49,16 @@ import net.minecraftforge.registries.IForgeRegistry;
 @Mod(modid = InfoDC.MOD_ID, version = InfoDC.MOD_VERSION, name = InfoDC.MOD_NAME, dependencies = "required-after:hammercore;required-after:musiclayer", certificateFingerprint = "4d7b29cd19124e986da685107d16ce4b49bc0a97")
 public class Divination
 {
-	public static final List<iModule> modules = new ArrayList<>();
-	public static final Map<Item, String> items = new HashMap<>();
+	@Instance
+	public static Divination instance;
 	
 	@SidedProxy(serverSide = "com.pengu.divination.proxy.Common", clientSide = "com.pengu.divination.proxy.Client")
 	public static Common proxy;
 	
-	public static TotemicModule totemic = new TotemicModule();
-	
+	public static iModule currentModule;
+	public static final List<iModule> modules = new ArrayList<>();
+	public static final Map<Item, String> items = new HashMap<>();
 	public static final Logger LOG = LogManager.getLogger(InfoDC.MOD_NAME);
-	
 	public static final CreativeTabs tab = new CreativeTabs(InfoDC.MOD_ID)
 	{
 		@Override
@@ -66,10 +68,11 @@ public class Divination
 		}
 	};
 	
-	@Instance
-	public static Divination instance;
+	//
 	
-	public static iModule currentModule;
+	public static TotemicModule totemic = new TotemicModule();
+	
+	//
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e)
@@ -86,7 +89,9 @@ public class Divination
 		MinecraftForge.EVENT_BUS.post(new GetDivinationModulesEvent(mds));
 		modules.addAll(mds);
 		
-		modules.removeIf(mod -> !ConfigsDC.cfg.getBoolean(mod.getName(), "Modules", true, "Should module '" + mod.getName() + "' be active?"));
+		// modules.removeIf(mod -> !ConfigsDC.cfg.getBoolean(mod.getName(),
+		// "Modules", true, "Should module '" + mod.getName() + "' be
+		// active?"));
 		
 		if(ConfigsDC.cfg.hasChanged())
 			ConfigsDC.cfg.save();
@@ -94,22 +99,19 @@ public class Divination
 		SimpleRegistration.registerFieldBlocksFrom(BlocksDC.class, InfoDC.MOD_ID, tab);
 		SimpleRegistration.registerFieldItemsFrom(ItemsDC.class, InfoDC.MOD_ID, tab);
 		
-		for(iModule mod : getModules())
+		forEachModule(mod ->
 		{
-			currentModule = mod;
 			mod.applyConfigs(ConfigsDC.forModule(mod));
-		}
+			iModuleProxy prox = mod.getProxy();
+			if(prox != null)
+				prox.applyClientConfigs(ConfigsDC.forClientModule(mod));
+		});
 		
-		currentModule = null;
-		
-		for(iModule mod : getModules())
+		forEachModule(mod ->
 		{
 			LOG.info("PreLoad module '" + mod.getName() + "'");
-			currentModule = mod;
 			mod.preInit();
-		}
-		
-		currentModule = null;
+		});
 	}
 	
 	@EventHandler
@@ -119,48 +121,32 @@ public class Divination
 		WorldGenDC.init();
 		proxy.init();
 		
-		for(iModule mod : getModules())
+		forEachModule(mod ->
 		{
 			LOG.info("Load module '" + mod.getName() + "'");
-			currentModule = mod;
 			mod.init();
 			mod.getRecipes().smelting();
-		}
-		
-		currentModule = null;
+		});
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
 		LOG.info("Performing postInit!");
-		for(iModule mod : getModules())
+		forEachModule(mod ->
 		{
-			currentModule = mod;
 			LOG.info("PostLoad module '" + mod.getName() + "'");
 			mod.postInit();
-		}
-		
-		currentModule = null;
+		});
 	}
 	
 	@SubscribeEvent
 	public void addRecipes(RegistryEvent.Register<IRecipe> reg)
 	{
 		IForgeRegistry<IRecipe> fr = reg.getRegistry();
-		RecipeHelper.getInstance(RecipesDC.class).collect() //
-		        .stream() //
-		        .filter(r -> r != null) //
-		        .forEach(fr::register);
-		for(iModule mod : getModules())
-		{
-			currentModule = mod;
-			mod.getRecipes().collect() //
-			        .stream() //
-			        .filter(r -> r != null) //
-			        .forEach(fr::register);
-		}
-		currentModule = null;
+		RecipeHelper.getInstance(RecipesDC.class) //
+		        .collect().stream().filter(r -> r != null).forEach(fr::register);
+		forEachModule(mod -> mod.getRecipes().collect().stream().filter(r -> r != null).forEach(fr::register));
 	}
 	
 	public static Collection<iModule> getModules()
@@ -234,5 +220,20 @@ public class Divination
 	public String getModuleName(Item it)
 	{
 		return items.get(it);
+	}
+	
+	public static void forEachModule(Consumer<iModule> m)
+	{
+		for(iModule mod : getModules())
+		{
+			currentModule = mod;
+			m.accept(mod);
+		}
+		currentModule = null;
+	}
+	
+	public static iModule currentModule()
+	{
+		return currentModule;
 	}
 }

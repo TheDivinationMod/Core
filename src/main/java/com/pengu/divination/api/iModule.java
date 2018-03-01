@@ -27,4 +27,9 @@ public interface iModule
 	{
 		
 	}
+	
+	default iModuleProxy getProxy()
+	{
+		return null;
+	}
 }

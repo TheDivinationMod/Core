@@ -11,14 +11,13 @@ public class ClientEffectManager extends EffectManager
 	@Override
 	public void wisp(World world, Vec3d pos, Vec3d target, float size, Layer type)
 	{
-		if(world.isRemote)
+		if(world == null || world.isRemote)
 		{
 			if(target != null)
 				new FXWisp(world, pos.x, pos.y, pos.z, target.x, target.y, target.z, size, type).spawn();
 			else
 				new FXWisp(world, pos.x, pos.y, pos.z, size, type).spawn();
-		}
-		else
+		} else
 			super.wisp(world, pos, target, size, type);
 	}
 }

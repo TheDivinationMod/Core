@@ -143,9 +143,9 @@ public class Client extends Common
 				float off = se != null ? 0.001F : 1.001F;
 				GL11.glTranslated(p.getX() - staticPlayerX, p.getY() - staticPlayerY + off, p.getZ() - staticPlayerZ);
 				GL11.glColor4f(0, 0, 0, .4F);
-				for(int x = 0; x < 16; ++x)
+				for(int x = 1; x < 16; ++x)
 					drawLine(0, 0, x / 16F, 1, 0, x / 16F);
-				for(int z = 0; z < 16; ++z)
+				for(int z = 1; z < 16; ++z)
 					drawLine(z / 16F, 0, 0, z / 16F, 0, 1);
 				
 				int hx = (int) ((r.hitVec.x % 1) * 16);

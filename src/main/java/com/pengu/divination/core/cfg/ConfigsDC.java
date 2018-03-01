@@ -1,4 +1,4 @@
-package com.pengu.divination.core;
+package com.pengu.divination.core.cfg;
 
 import java.io.File;
 import java.util.HashMap;
@@ -38,6 +38,19 @@ public class ConfigsDC implements iConfigReloadListener
 		if(moduleCfgs.containsKey(name))
 			return moduleCfgs.get(name);
 		File f = new File("config", InfoDC.MOD_ID);
+		if(!f.isDirectory())
+			f.mkdirs();
+		Configuration c = new Configuration(new File(f, mod.getName().toLowerCase() + ".cfg"));
+		moduleCfgs.put(name, c);
+		return c;
+	}
+	
+	public static Configuration forClientModule(iModule mod)
+	{
+		String name = mod.getName() + "-client";
+		if(moduleCfgs.containsKey(name))
+			return moduleCfgs.get(name);
+		File f = new File(InfoDC.MOD_ID, "client-configs");
 		if(!f.isDirectory())
 			f.mkdirs();
 		Configuration c = new Configuration(new File(f, mod.getName().toLowerCase() + ".cfg"));

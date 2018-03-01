@@ -3,17 +3,12 @@ package com.pengu.divination.core.client.gui;
 import org.lwjgl.opengl.GL11;
 
 import com.pengu.divination.InfoDC;
-import com.pengu.divination.core.data.ClientResearchData;
-import com.pengu.divination.totemic.init.ItemsDT;
-import com.pengu.divination.totemic.seals.core.TotemicSeal;
 import com.pengu.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.client.utils.UtilsFX;
 import com.pengu.hammercore.core.gui.GuiCentered;
 
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
 
 public class GuiNotes extends GuiCentered
 {
