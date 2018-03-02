@@ -38,7 +38,7 @@ public class GuiMasterConfigs extends GuiScreen
 			buttonList.add(new GuiButton(2, (width - 100) / 2, (height - 20) / 2, 100, 20, "Core Configs"));
 			GuiButton cmn;
 			buttonList.add(cmn = new GuiButton(3, (width + 100) / 2 + 4, (height - 20) / 2, 100, 20, "Common Configs"));
-			cmn.enabled = ConfigsDC.globalGuiEdit;
+			cmn.enabled = Divination.globalGuiEdit;
 		} else
 		{
 			ArrayList<iModule> mods = (ArrayList<iModule>) Divination.getModules();

@@ -4,6 +4,7 @@ import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatc
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerY;
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerZ;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -18,24 +19,45 @@ import com.pengu.musiclayer.api.GetMusicEvent;
 import com.pengu.musiclayer.api.MusicLayer;
 import com.pengu.musiclayer.api.UpdateAlternativeMusicEvent;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.client.GuiModList;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Client extends Common
 {
 	private String oneTimeMusic;
+	
+	private static final TextFormatting[] RAINBOW_COLORS = new TextFormatting[7];
+	
+	static
+	{
+		RAINBOW_COLORS[0] = TextFormatting.RED;
+		RAINBOW_COLORS[1] = TextFormatting.GOLD;
+		RAINBOW_COLORS[2] = TextFormatting.YELLOW;
+		RAINBOW_COLORS[3] = TextFormatting.GREEN;
+		RAINBOW_COLORS[4] = TextFormatting.LIGHT_PURPLE;
+		RAINBOW_COLORS[5] = TextFormatting.DARK_PURPLE;
+		RAINBOW_COLORS[6] = TextFormatting.LIGHT_PURPLE;
+	}
 	
 	@Override
 	public void preInit()
@@ -187,5 +209,67 @@ public class Client extends Common
 		GL11.glVertex3f(x0, y0, z0);
 		GL11.glVertex3f(x1, y1, z1);
 		GL11.glEnd();
+	}
+	
+	@SubscribeEvent
+	public void initGui(TextureStitchEvent.Post e)
+	{
+		Divination.modMeta.description = getFormattedDesc();
+	}
+	
+	public static String getFormattedDesc()
+	{
+		String desc = Divination.modDescOrigin.replaceAll("<modname>", InfoDC.MOD_NAME);
+		
+		int in;
+		while((in = desc.indexOf("<i18n:")) != -1)
+		{
+			int end = desc.indexOf('>', in);
+			if(end == -1)
+				break;
+			String tag = desc.substring(in, end + 1);
+			String[] sub = desc.substring(in + 1, end).split(":", 3);
+			String fin = "";
+			
+			if(sub[1].equalsIgnoreCase("block") || sub[1].equalsIgnoreCase("tile"))
+			{
+				Block bl = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(sub[2]));
+				if(bl != null)
+					fin = bl.getLocalizedName();
+			} else if(sub[1].equalsIgnoreCase("item"))
+			{
+				Item it = GameRegistry.findRegistry(Item.class).getValue(new ResourceLocation(sub[2]));
+				if(it != null)
+					fin = it.getItemStackDisplayName(it.getDefaultInstance());
+			} else if(sub[1].equalsIgnoreCase("custom"))
+				fin = I18n.format(sub[2]);
+			
+			desc = desc.replaceAll(tag, fin);
+		}
+		
+		while((in = desc.indexOf("<rainbow>")) != -1)
+		{
+			String en = "</rainbow>";
+			int end = desc.indexOf(en, in);
+			
+			if(end == -1)
+				break;
+			
+			String tag = desc.substring(in, end + en.length());
+			String text = rainbow(desc.substring(in + 9, end));
+			
+			desc = desc.replaceAll(tag, text);
+		}
+		
+		return desc;
+	}
+	
+	public static String rainbow(String text)
+	{
+		StringBuilder b = new StringBuilder();
+		char[] chars = text.toCharArray();
+		for(int i = 0; i < chars.length; ++i)
+			b.append(RAINBOW_COLORS[i % RAINBOW_COLORS.length].toString() + chars[i]);
+		return b.toString();
 	}
 }

@@ -6,10 +6,13 @@ itemGroup.divinationmod=The Divination Mod
 
 ##MODULES##
 divination_module.totemic=Totemic
+divination_module.mirror=Mirror
+divination_module.celestial=Celestial
 ###########
 
 ##TILES##
 tile.divinationmod:mysterium_ore.name=Mysterium Ore
+tile.divinationmod:ice_bricks.name=Ice Bricks
 #########
 
 ##ITEMS##

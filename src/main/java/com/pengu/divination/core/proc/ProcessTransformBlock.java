@@ -34,14 +34,14 @@ public class ProcessTransformBlock implements iProcess
 			else if(ticks >= 20)
 				for(int j = 0; j < 2; ++j)
 				{
-					Vec3d rng = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * 1.75F, (world.rand.nextFloat() - world.rand.nextFloat()) * 1.75F, (world.rand.nextFloat() - world.rand.nextFloat()) * 1.75F);
+					Vec3d rng = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F);
 					EffectManager.fx().wisp(world, pos, pos.add(rng), 3F + world.rand.nextFloat() * 4F, new Layer(world.rand.nextBoolean() ? 771 : 1, world.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true));
 				}
 			
 			if(ticks == 280)
-				for(int i = 0; i < 48; ++i)
+				for(int i = 0; i < 100; ++i)
 				{
-					Vec3d rng = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * 1.75F, (world.rand.nextFloat() - world.rand.nextFloat()) * 1.75F, (world.rand.nextFloat() - world.rand.nextFloat()) * 1.75F);
+					Vec3d rng = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F);
 					Vec3d rng2 = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * .5F, (world.rand.nextFloat() - world.rand.nextFloat()) * .5F, (world.rand.nextFloat() - world.rand.nextFloat()) * .5F);
 					EffectManager.fx().wisp(world, pos.add(rng2), pos.add(rng), 7F + world.rand.nextFloat() * 6F, new Layer(world.rand.nextBoolean() ? 771 : 1, world.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true));
 				}
