@@ -2,7 +2,7 @@ package com.pengu.divination.totemic.client.isr;
 
 import org.lwjgl.opengl.GL11;
 
-import com.pengu.divination.InfoDC;
+import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.divination.totemic.items.ItemSealNote;
 import com.pengu.divination.totemic.seals.core.TotemicSeal;
 import com.pengu.hammercore.client.render.item.iItemRender;

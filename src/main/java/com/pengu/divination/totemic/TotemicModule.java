@@ -4,10 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pengu.divination.Divination;
-import com.pengu.divination.InfoDC;
 import com.pengu.divination.api.RecipeHelper;
 import com.pengu.divination.api.iModule;
 import com.pengu.divination.api.iModuleProxy;
+import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.divination.core.init.EntitiesDC;
 import com.pengu.divination.totemic.init.BlocksDT;
 import com.pengu.divination.totemic.init.ItemsDT;

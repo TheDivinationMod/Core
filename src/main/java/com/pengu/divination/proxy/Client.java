@@ -9,8 +9,8 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.pengu.divination.Divination;
-import com.pengu.divination.InfoDC;
 import com.pengu.divination.core.client.gui.GuiNotes;
+import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.divination.totemic.items.ItemBrush;
 import com.pengu.divination.totemic.tiles.TileTotemicSeal;
 import com.pengu.hammercore.common.utils.WorldUtil;

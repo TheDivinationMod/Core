@@ -7,8 +7,11 @@ import java.util.function.Function;
 
 import com.endie.lib.tuple.TwoTuple;
 import com.pengu.divination.api.items.ItemResearchable;
+import com.pengu.divination.core.constants.MusicURLs;
 import com.pengu.divination.core.data.ResearchSystem;
+import com.pengu.divination.core.init.BlocksDC;
 import com.pengu.divination.core.init.ItemsDC;
+import com.pengu.divination.core.net.PacketStartMusic;
 import com.pengu.divination.core.proc.ProcessTransformBlock;
 import com.pengu.divination.core.proc.ProcessTransformItem;
 import com.pengu.divination.proxy.EffectManager;
@@ -21,6 +24,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -46,11 +50,16 @@ public class ItemMysteriumDust extends ItemResearchable
 		transmute(null, Items.BOOK, ItemsDC.MYSTERIUM_BOOK);
 		transmute(null, Blocks.CRAFTING_TABLE, table -> Blocks.AIR.getDefaultState());
 		transmute(null, new Block[] { Blocks.FURNACE, Blocks.LIT_FURNACE }, furn -> Blocks.AIR.getDefaultState());
+		transmute(null, Blocks.LAPIS_ORE, ore -> BlocksDC.MYSTERIUM_ORE.getDefaultState());
+		transmute(null, Blocks.YELLOW_FLOWER, fl -> Blocks.RED_FLOWER.getStateFromMeta(0));
+		transmute(null, Blocks.RED_FLOWER, fl -> fl.getBlock().getMetaFromState(fl) == 8 ? Blocks.YELLOW_FLOWER.getDefaultState() : Blocks.RED_FLOWER.getStateFromMeta(fl.getBlock().getMetaFromState(fl) + 1));
+		transmute(null, Blocks.BROWN_MUSHROOM, ore -> Blocks.RED_MUSHROOM.getDefaultState());
+		transmute(null, Blocks.RED_MUSHROOM, ore -> Blocks.BROWN_MUSHROOM.getDefaultState());
 	}
 	
 	public static void transmute(String res, Item in, Item out)
 	{
-		ITEM_TRANSMUTATION.put(in, new TwoTuple<>(in, res));
+		ITEM_TRANSMUTATION.put(in, new TwoTuple<>(out, res));
 	}
 	
 	public static void transmute(String res, Block in, Function<IBlockState, IBlockState> out)
@@ -125,6 +134,9 @@ public class ItemMysteriumDust extends ItemResearchable
 			
 			EffectManager.fx().wisp(worldIn, ps, end, 1F, new Thunder.Layer(771, worldIn.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true));
 		}
+		
+		if(playerIn instanceof EntityPlayerMP)
+			HCNetwork.manager.sendTo(new PacketStartMusic(MusicURLs.MAGICAL_PORTAL_OPEN), (EntityPlayerMP) playerIn);
 	}
 	
 	@SubscribeEvent

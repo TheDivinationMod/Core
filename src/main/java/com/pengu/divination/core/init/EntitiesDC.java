@@ -1,7 +1,7 @@
 package com.pengu.divination.core.init;
 
 import com.pengu.divination.Divination;
-import com.pengu.divination.InfoDC;
+import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.divination.core.entity.npc.EntityNPC;
 import com.pengu.divination.totemic.entity.npc.EntityShaman;
 

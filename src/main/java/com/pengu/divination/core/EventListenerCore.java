@@ -1,6 +1,7 @@
 package com.pengu.divination.core;
 
 import com.pengu.divination.api.events.UnlockDefaultResearchesEvent;
+import com.pengu.divination.core.constants.MusicURLs;
 import com.pengu.divination.core.data.PlayerResearchData;
 import com.pengu.divination.core.data.ResearchSystem;
 import com.pengu.divination.core.init.ItemsDC;
@@ -33,7 +34,7 @@ public class EventListenerCore
 				{
 					ResearchSystem.setResearchCompleted(player, ItemsDC.MYSTERIUM_DUST, true);
 					dat.spawnNotes((EntityPlayerMP) player);
-					HCNetwork.manager.sendTo(new PacketStartMusic("https://www.dropbox.com/s/kypjmvyqkk1docf/magical_portal_open.ogg?dl=1"), (EntityPlayerMP) player);
+					HCNetwork.manager.sendTo(new PacketStartMusic(MusicURLs.MAGICAL_PORTAL_OPEN), (EntityPlayerMP) player);
 				}
 			}
 		}

@@ -2,8 +2,8 @@ package com.pengu.divination.core.data;
 
 import java.util.ArrayList;
 
-import com.pengu.divination.InfoDC;
 import com.pengu.divination.api.events.UnlockDefaultResearchesEvent;
+import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.divination.core.items.ItemNotes;
 import com.pengu.divination.core.net.PacketStopMusic;
 import com.pengu.divination.proxy.EffectManager;

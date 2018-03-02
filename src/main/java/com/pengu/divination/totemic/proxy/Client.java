@@ -6,6 +6,7 @@ import com.pengu.divination.totemic.client.isr.ItemRenderSealNote;
 import com.pengu.divination.totemic.client.tesr.TESRTotemicSeal;
 import com.pengu.divination.totemic.entity.npc.EntityShaman;
 import com.pengu.divination.totemic.init.ItemsDT;
+import com.pengu.divination.totemic.items.ItemBrush;
 import com.pengu.divination.totemic.seals.core.EnumSealColor;
 import com.pengu.divination.totemic.seals.core.TotemicSeal;
 import com.pengu.divination.totemic.tiles.TileTotemicSeal;
@@ -35,9 +36,9 @@ public class Client extends Common
 		{
 			if(tint == 1)
 			{
-				NBTTagCompound nbt = stack.getTagCompound();
-				if(nbt != null && nbt.hasKey("Color", NBT.TAG_INT))
-					return EnumSealColor.values()[nbt.getInteger("Color") % EnumSealColor.values().length].getColor();
+				EnumSealColor col = ItemBrush.getColor(stack);
+				if(col != null)
+					return col.getColor();
 				return 0x591400;
 			}
 			

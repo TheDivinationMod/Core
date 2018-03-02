@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 import javax.imageio.ImageIO;
 
 import com.pengu.divination.Divination;
-import com.pengu.divination.InfoDC;
+import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.divination.totemic.tiles.TileTotemicSeal;
 
 public class SealDefiner

@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class HouseValidator
 {
-	public static final short MAX_HOME_SIZE = 10000; // 10K blocks inside home
+	public static final short MAX_HOME_SIZE = 5000; // 5K blocks inside home
 													 // is max, not to make
 													 // everything lag out!
 	

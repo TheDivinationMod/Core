@@ -1,4 +1,4 @@
-package com.pengu.divination;
+package com.pengu.divination.core.constants;
 
 public class InfoDC
 {

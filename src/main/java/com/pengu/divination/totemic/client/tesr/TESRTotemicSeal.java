@@ -1,6 +1,6 @@
 package com.pengu.divination.totemic.client.tesr;
 
-import com.pengu.divination.InfoDC;
+import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.divination.totemic.init.BlocksDT;
 import com.pengu.divination.totemic.seals.core.EnumSealColor;
 import com.pengu.divination.totemic.seals.core.TSealPoint;

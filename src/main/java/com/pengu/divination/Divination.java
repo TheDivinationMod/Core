@@ -17,6 +17,8 @@ import com.pengu.divination.api.iModule;
 import com.pengu.divination.api.iModuleProxy;
 import com.pengu.divination.api.events.GetDivinationModulesEvent;
 import com.pengu.divination.core.cfg.ConfigsDC;
+import com.pengu.divination.core.constants.InfoDC;
+import com.pengu.divination.core.constants.URLsDC;
 import com.pengu.divination.core.init.BlocksDC;
 import com.pengu.divination.core.init.ItemsDC;
 import com.pengu.divination.core.init.RecipesDC;
@@ -46,7 +48,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@Mod(modid = InfoDC.MOD_ID, version = InfoDC.MOD_VERSION, name = InfoDC.MOD_NAME, dependencies = "required-after:hammercore;required-after:musiclayer", certificateFingerprint = "4d7b29cd19124e986da685107d16ce4b49bc0a97")
+@Mod(modid = InfoDC.MOD_ID, version = InfoDC.MOD_VERSION, name = InfoDC.MOD_NAME, dependencies = "required-after:hammercore;required-after:musiclayer", certificateFingerprint = "4d7b29cd19124e986da685107d16ce4b49bc0a97", guiFactory = "com.pengu.divination.core.cfg.ConfigFactoryDC", updateJSON = URLsDC.GIT_JSON_UPDATE)
 public class Divination
 {
 	@Instance

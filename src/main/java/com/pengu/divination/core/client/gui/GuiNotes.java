@@ -2,7 +2,7 @@ package com.pengu.divination.core.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
-import com.pengu.divination.InfoDC;
+import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.client.utils.UtilsFX;
 import com.pengu.hammercore.core.gui.GuiCentered;

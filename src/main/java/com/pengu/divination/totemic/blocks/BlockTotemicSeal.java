@@ -94,7 +94,8 @@ public class BlockTotemicSeal extends BlockTraceable implements iCubeManager, iT
 			for(int i = 0; i < cbs.length; ++i)
 			{
 				TSealPoint p = seal.points.get(i);
-				cbs[i] = new Cuboid6(p.x / 16D, 0, p.y / 16D, (p.x + 1) / 16D, .05 / 16, (p.y + 1) / 16D);
+				if(p != null)
+					cbs[i] = new Cuboid6(p.x / 16D, 0, p.y / 16D, (p.x + 1) / 16D, .05 / 16, (p.y + 1) / 16D);
 			}
 			return cbs;
 		}
