@@ -152,7 +152,7 @@ public class Client extends Common
 			
 			TileTotemicSeal se = WorldUtil.cast(w.getTileEntity(p), TileTotemicSeal.class);
 			
-			if(w.getBlockState(p).isSideSolid(w, p, EnumFacing.UP) || se != null)
+			if((w.getBlockState(p).isSideSolid(w, p, EnumFacing.UP) && (w.isAirBlock(p.up()) || w.getTileEntity(p.up()) instanceof TileTotemicSeal)) || se != null)
 			{
 				GL11.glPushMatrix();
 				

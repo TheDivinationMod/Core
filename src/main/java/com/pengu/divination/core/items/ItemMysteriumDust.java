@@ -1,7 +1,9 @@
 package com.pengu.divination.core.items;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -11,10 +13,12 @@ import com.pengu.divination.core.constants.MusicURLs;
 import com.pengu.divination.core.data.ResearchSystem;
 import com.pengu.divination.core.init.BlocksDC;
 import com.pengu.divination.core.init.ItemsDC;
+import com.pengu.divination.core.init.SoundsDC;
 import com.pengu.divination.core.net.PacketStartMusic;
 import com.pengu.divination.core.proc.ProcessTransformBlock;
 import com.pengu.divination.core.proc.ProcessTransformItem;
 import com.pengu.divination.proxy.EffectManager;
+import com.pengu.hammercore.common.utils.SoundUtil;
 import com.pengu.hammercore.net.HCNetwork;
 import com.pengu.hammercore.net.pkt.thunder.Thunder;
 import com.pengu.hammercore.raytracer.RayTracer;
@@ -32,6 +36,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -135,8 +140,10 @@ public class ItemMysteriumDust extends ItemResearchable
 			EffectManager.fx().wisp(worldIn, ps, end, 1F, new Thunder.Layer(771, worldIn.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true));
 		}
 		
-		if(playerIn instanceof EntityPlayerMP)
-			HCNetwork.manager.sendTo(new PacketStartMusic(MusicURLs.MAGICAL_PORTAL_OPEN), (EntityPlayerMP) playerIn);
+//		if(playerIn instanceof EntityPlayerMP)
+//			HCNetwork.manager.sendTo(new PacketStartMusic(MusicURLs.MAGICAL_PORTAL_OPEN), (EntityPlayerMP) playerIn);
+		
+		SoundUtil.playSoundEffect(worldIn, SoundsDC.DUST.name.toString(), end.x, end.y, end.z, 1F, 1F, SoundCategory.PLAYERS);
 	}
 	
 	@SubscribeEvent
@@ -149,17 +156,28 @@ public class ItemMysteriumDust extends ItemResearchable
 			WorldLocation loc = new WorldLocation(e.getWorld(), e.getPos());
 			
 			TwoTuple<Function<IBlockState, IBlockState>, String> out = WORLD_TRANSMUTATION.get(loc.getBlock());
-			if(out != null && e.getEntityPlayer().isSneaking() && (out.get2() == null || ResearchSystem.isResearchCompleted(e.getEntityPlayer(), out.get2())))
+			if(!e.getWorld().isRemote && out != null && e.getEntityPlayer().isSneaking() && (out.get2() == null || ResearchSystem.isResearchCompleted(e.getEntityPlayer(), out.get2())))
 			{
-				ProcessTransformBlock p = new ProcessTransformBlock();
-				p.loc = loc;
-				p.start();
+				int dim = loc.getWorld().provider.getDimension();
+				Set<Long> active = ProcessTransformBlock.WORLD_ACTIVE.get(dim);
+				if(active == null)
+					ProcessTransformBlock.WORLD_ACTIVE.put(dim, active = new HashSet<>());
 				
-				blow(e.getEntityPlayer(), new Vec3d(loc.getPos()).addVector(.5, .5, .5), .5);
-				if(!e.getEntityPlayer().capabilities.isCreativeMode)
-					e.getItemStack().shrink(1);
-				e.setCanceled(true);
-				HCNetwork.swingArm(e.getEntityPlayer(), e.getHand());
+				long pl = loc.getPos().toLong();
+				if(!active.contains(pl) && active.add(pl))
+				{
+					ProcessTransformBlock p = new ProcessTransformBlock();
+					p.loc = loc;
+					p.start();
+					
+					AxisAlignedBB aabb = loc.getState().getBoundingBox(e.getWorld(), loc.getPos());
+					Vec3d center = aabb != null ? aabb.getCenter() : new Vec3d(.5, .5, .5);
+					blow(e.getEntityPlayer(), new Vec3d(loc.getPos()).add(center), .5);
+					if(!e.getEntityPlayer().capabilities.isCreativeMode)
+						e.getItemStack().shrink(1);
+					e.setCanceled(true);
+					HCNetwork.swingArm(e.getEntityPlayer(), e.getHand());
+				}
 			}
 		}
 	}

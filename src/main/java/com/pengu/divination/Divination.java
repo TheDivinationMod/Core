@@ -23,7 +23,9 @@ import com.pengu.divination.core.constants.URLsDC;
 import com.pengu.divination.core.init.BlocksDC;
 import com.pengu.divination.core.init.ItemsDC;
 import com.pengu.divination.core.init.RecipesDC;
+import com.pengu.divination.core.init.SoundsDC;
 import com.pengu.divination.core.init.WorldGenDC;
+import com.pengu.divination.core.proc.ProcessTransformBlock;
 import com.pengu.divination.proxy.Common;
 import com.pengu.divination.totemic.TotemicModule;
 import com.pengu.hammercore.common.SimpleRegistration;
@@ -48,6 +50,8 @@ import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -81,6 +85,15 @@ public class Divination
 	public static TotemicModule totemic = new TotemicModule();
 	
 	//
+	
+	@EventHandler
+	public void certificateViolation(FMLFingerprintViolationEvent e)
+	{
+		MusicLayer.LOG.warn("*****************************");
+		MusicLayer.LOG.warn("WARNING: Somebody has been tampering with The Divination Mod jar!");
+		MusicLayer.LOG.warn("It is highly recommended that you redownload mod from " + InfoDC.CURSEFORGE_PROJECT_URL + " !");
+		MusicLayer.LOG.warn("*****************************");
+	}
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e)
@@ -122,6 +135,8 @@ public class Divination
 			LOG.info("PreLoad module '" + mod.getName() + "'");
 			mod.preInit();
 		});
+		
+		SimpleRegistration.registerFieldSoundsFrom(SoundsDC.class);
 	}
 	
 	@EventHandler
@@ -150,6 +165,18 @@ public class Divination
 		});
 	}
 	
+	@EventHandler
+	public void serverStop(FMLServerStartedEvent e)
+	{
+		ProcessTransformBlock.WORLD_ACTIVE.clear();
+	}
+	
+	@EventHandler
+	public void serverStop(FMLServerStoppedEvent e)
+	{
+		ProcessTransformBlock.WORLD_ACTIVE.clear();
+	}
+	
 	@SubscribeEvent
 	public void addRecipes(RegistryEvent.Register<IRecipe> reg)
 	{
@@ -162,15 +189,6 @@ public class Divination
 	public static Collection<iModule> getModules()
 	{
 		return modules;
-	}
-	
-	@EventHandler
-	public void certificateViolation(FMLFingerprintViolationEvent e)
-	{
-		MusicLayer.LOG.warn("*****************************");
-		MusicLayer.LOG.warn("WARNING: Somebody has been tampering with The Divination Mod jar!");
-		MusicLayer.LOG.warn("It is highly recommended that you redownload mod from " + InfoDC.CURSEFORGE_PROJECT_URL + " !");
-		MusicLayer.LOG.warn("*****************************");
 	}
 	
 	private static ModMetadata meta(ModMetadata md)
