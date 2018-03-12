@@ -143,7 +143,7 @@ public class ItemMysteriumDust extends ItemResearchable
 //		if(playerIn instanceof EntityPlayerMP)
 //			HCNetwork.manager.sendTo(new PacketStartMusic(MusicURLs.MAGICAL_PORTAL_OPEN), (EntityPlayerMP) playerIn);
 		
-		SoundUtil.playSoundEffect(worldIn, SoundsDC.DUST.name.toString(), end.x, end.y, end.z, 1F, 1F, SoundCategory.PLAYERS);
+		SoundUtil.playSoundEffect(worldIn, SoundsDC.DUST.name.toString(), end.x, end.y, end.z, .5F, 1F, SoundCategory.BLOCKS);
 	}
 	
 	@SubscribeEvent

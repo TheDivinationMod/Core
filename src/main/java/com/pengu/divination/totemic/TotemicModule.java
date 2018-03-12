@@ -4,14 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pengu.divination.Divination;
-import com.pengu.divination.api.RecipeHelper;
 import com.pengu.divination.api.iModule;
 import com.pengu.divination.api.iModuleProxy;
 import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.divination.core.init.EntitiesDC;
 import com.pengu.divination.totemic.init.BlocksDT;
 import com.pengu.divination.totemic.init.ItemsDT;
-import com.pengu.divination.totemic.init.RecipesDT;
 import com.pengu.divination.totemic.init.TotemicSealsDT;
 import com.pengu.divination.totemic.proxy.Common;
 
@@ -65,12 +63,6 @@ public class TotemicModule implements iModule
 	public String getName()
 	{
 		return "Totemic";
-	}
-	
-	@Override
-	public RecipeHelper getRecipes()
-	{
-		return RecipeHelper.getInstance(RecipesDT.class);
 	}
 	
 	@Override

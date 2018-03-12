@@ -1,16 +1,24 @@
 package com.pengu.divination.core.init;
 
-import com.pengu.divination.ShapelessRecipeBuilder;
-import com.pengu.divination.api.RecipeHelper;
+import com.pengu.divination.core.constants.InfoDC;
+import com.pengu.hammercore.common.SimpleRegistration;
+import com.pengu.hammercore.recipeAPI.helper.RecipeRegistry;
+import com.pengu.hammercore.recipeAPI.helper.RegisterRecipes;
+import com.pengu.hammercore.recipeAPI.helper.ShapelessRecipeBuilder;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class RecipesDC extends RecipeHelper
+@RegisterRecipes(modid = InfoDC.MOD_ID)
+public class RecipesDC extends RecipeRegistry
 {
 	@Override
 	public void crafting()
 	{
+		shaped(new ItemStack(BlocksDC.ICE_BRICKS, 4), "is", "si", 'i', Blocks.ICE, 's', Blocks.SNOW);
+		shaped(new ItemStack(BlocksDC.ICE_BRICKS, 4), "si", "is", 'i', Blocks.ICE, 's', Blocks.SNOW);
+		
 		recipe(ShapelessRecipeBuilder //
 		        .builder() //
 		        .output(new ItemStack(ItemsDC.MYSTERIUM_DUST)) //

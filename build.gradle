@@ -51,15 +51,15 @@ minecraft {
 }
 
 repositories {
-	maven {
-        name = "APengu Maven"
-        url = "http://apengu.github.io/PenguLibs"
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
     }
 }
 
 dependencies {
-	deobfCompile "apengu:HammerCore:${config.minecraft_version}-${config.hc_version}:deobf"
-	deobfCompile "apengu:MusicLayer:${config.minecraft_version}-${config.ml_version}:deobf"
+	deobfCompile "hammer-core:HammerCore-${config.minecraft_version}:${config.hc_version}:deobf"
+	deobfCompile "music-layer:MusicLayer-${config.minecraft_version}:${config.ml_version}:deobf"
 }
 
 processResources

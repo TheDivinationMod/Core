@@ -13,7 +13,6 @@ import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.pengu.divination.api.RecipeHelper;
 import com.pengu.divination.api.iModule;
 import com.pengu.divination.api.iModuleProxy;
 import com.pengu.divination.api.events.GetDivinationModulesEvent;
@@ -22,7 +21,6 @@ import com.pengu.divination.core.constants.InfoDC;
 import com.pengu.divination.core.constants.URLsDC;
 import com.pengu.divination.core.init.BlocksDC;
 import com.pengu.divination.core.init.ItemsDC;
-import com.pengu.divination.core.init.RecipesDC;
 import com.pengu.divination.core.init.SoundsDC;
 import com.pengu.divination.core.init.WorldGenDC;
 import com.pengu.divination.core.proc.ProcessTransformBlock;
@@ -38,9 +36,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -52,8 +48,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(modid = InfoDC.MOD_ID, version = InfoDC.MOD_VERSION, name = InfoDC.MOD_NAME, dependencies = "required-after:hammercore;required-after:musiclayer", certificateFingerprint = "4d7b29cd19124e986da685107d16ce4b49bc0a97", guiFactory = "com.pengu.divination.core.cfg.ConfigFactoryDC", updateJSON = URLsDC.GIT_JSON_UPDATE)
 public class Divination
@@ -99,7 +93,6 @@ public class Divination
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		LOG.info("Performing preInit!");
-		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(proxy);
 		meta(e.getModMetadata());
 		proxy.preInit();
@@ -150,7 +143,6 @@ public class Divination
 		{
 			LOG.info("Load module '" + mod.getName() + "'");
 			mod.init();
-			mod.getRecipes().smelting();
 		});
 	}
 	
@@ -175,15 +167,6 @@ public class Divination
 	public void serverStop(FMLServerStoppedEvent e)
 	{
 		ProcessTransformBlock.WORLD_ACTIVE.clear();
-	}
-	
-	@SubscribeEvent
-	public void addRecipes(RegistryEvent.Register<IRecipe> reg)
-	{
-		IForgeRegistry<IRecipe> fr = reg.getRegistry();
-		RecipeHelper.getInstance(RecipesDC.class) //
-		        .collect().stream().filter(r -> r != null).forEach(fr::register);
-		forEachModule(mod -> mod.getRecipes().collect().stream().filter(r -> r != null).forEach(fr::register));
 	}
 	
 	public static Collection<iModule> getModules()

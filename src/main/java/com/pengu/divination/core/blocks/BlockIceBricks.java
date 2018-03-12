@@ -11,5 +11,6 @@ public class BlockIceBricks extends Block
 		super(Material.ROCK);
 		setUnlocalizedName("ice_bricks");
 		setSoundType(SoundType.GLASS);
+		setHardness(.5F);
 	}
 }

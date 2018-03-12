@@ -4,8 +4,6 @@ import net.minecraftforge.common.config.Configuration;
 
 public interface iModule
 {
-	RecipeHelper getRecipes();
-	
 	default void preInit()
 	{
 	};
