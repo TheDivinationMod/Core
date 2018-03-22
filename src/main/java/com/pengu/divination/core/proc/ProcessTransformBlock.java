@@ -9,6 +9,7 @@ import java.util.function.Function;
 import com.endie.lib.tuple.TwoTuple;
 import com.pengu.divination.core.items.ItemMysteriumDust;
 import com.pengu.divination.proxy.EffectManager;
+import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.api.iProcess;
 import com.pengu.hammercore.net.pkt.thunder.Thunder.Layer;
 import com.pengu.hammercore.utils.WorldLocation;
@@ -48,8 +49,7 @@ public class ProcessTransformBlock implements iProcess
 				active.remove(loc.getPos().toLong());
 				
 				loc.setState(stateMap.apply(loc.getState()));
-			}
-			else if(ticks >= 20)
+			} else if(ticks >= 20)
 				for(int j = 0; j < 2; ++j)
 				{
 					Vec3d rng = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F);
@@ -63,6 +63,12 @@ public class ProcessTransformBlock implements iProcess
 					Vec3d rng2 = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * .5F, (world.rand.nextFloat() - world.rand.nextFloat()) * .5F, (world.rand.nextFloat() - world.rand.nextFloat()) * .5F);
 					EffectManager.fx().wisp(world, pos.add(rng2), pos.add(rng), 7F + world.rand.nextFloat() * 6F, new Layer(world.rand.nextBoolean() ? 771 : 1, world.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true));
 				}
+			else if(ticks >= 220 && ticks % 2 == 0)
+			{
+				Vec3d rng = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F);
+				Vec3d rng2 = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * .5F, (world.rand.nextFloat() - world.rand.nextFloat()) * .5F, (world.rand.nextFloat() - world.rand.nextFloat()) * .5F);
+				HammerCore.particleProxy.spawnSimpleThunder(world, pos.add(rng2), pos.add(rng), world.rand.nextLong(), 1, 2F, new Layer(771, world.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true), new Layer(1, world.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true));
+			}
 		}
 		
 		++ticks;

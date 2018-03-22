@@ -24,6 +24,7 @@ import com.pengu.divination.core.init.ItemsDC;
 import com.pengu.divination.core.init.SoundsDC;
 import com.pengu.divination.core.init.WorldGenDC;
 import com.pengu.divination.core.proc.ProcessTransformBlock;
+import com.pengu.divination.mirror.MirrorModule;
 import com.pengu.divination.proxy.Common;
 import com.pengu.divination.totemic.TotemicModule;
 import com.pengu.hammercore.common.SimpleRegistration;
@@ -75,8 +76,9 @@ public class Divination
 	};
 	
 	//
-	
+
 	public static TotemicModule totemic = new TotemicModule();
+	public static MirrorModule mirror = new MirrorModule();
 	
 	//
 	
@@ -98,8 +100,9 @@ public class Divination
 		proxy.preInit();
 		
 		globalGuiEdit = ConfigsDC.globalGuiEdit;
-		
+
 		modules.add(totemic);
+		modules.add(mirror);
 		
 		List<iModule> mds = new ArrayList<>();
 		MinecraftForge.EVENT_BUS.post(new GetDivinationModulesEvent(mds));

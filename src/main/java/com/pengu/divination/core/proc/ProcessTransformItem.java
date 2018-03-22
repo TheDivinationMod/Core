@@ -3,6 +3,7 @@ package com.pengu.divination.core.proc;
 import com.pengu.divination.core.init.ItemsDC;
 import com.pengu.divination.core.items.ItemMysteriumDust;
 import com.pengu.divination.proxy.EffectManager;
+import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.api.iProcess;
 import com.pengu.hammercore.net.pkt.thunder.Thunder.Layer;
 
@@ -44,6 +45,13 @@ public class ProcessTransformItem implements iProcess
 				{
 					Vec3d rng = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * 1F, (world.rand.nextFloat() - world.rand.nextFloat()) * 1F, (world.rand.nextFloat() - world.rand.nextFloat()) * 1F);
 					EffectManager.fx().wisp(world, ent.getPositionVector().addVector(0, ent.getEyeHeight() * 2, 0), ent.getPositionVector().addVector(0, ent.getEyeHeight() * 2, 0).add(rng), 3F + world.rand.nextFloat(), new Layer(world.rand.nextBoolean() ? 771 : 1, world.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true));
+				}
+				if(ticks >= 120 && ticks % 2 == 0)
+				{
+					Vec3d pos = ent.getPositionVector().addVector(.25, .25, .25);
+					Vec3d rng = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F, (world.rand.nextFloat() - world.rand.nextFloat()) * 2F);
+					Vec3d rng2 = new Vec3d((world.rand.nextFloat() - world.rand.nextFloat()) * .5F, (world.rand.nextFloat() - world.rand.nextFloat()) * .5F, (world.rand.nextFloat() - world.rand.nextFloat()) * .5F);
+					HammerCore.particleProxy.spawnSimpleThunder(world, pos.add(rng2), pos.add(rng), world.rand.nextLong(), 1, 2F, new Layer(771, world.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true), new Layer(1, world.rand.nextInt(9) == 0 ? 0xCC00FF : 0x2222FF, true));
 				}
 			}
 		}
